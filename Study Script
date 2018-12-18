@@ -1,0 +1,288 @@
+## Copyright (c) 2017 Copyright Holder All Rights Reserved.
+## Study Script - V 1.0.0
+## Author: Dena, Rene
+## Last Modified: 10/07/17
+
+## LM Notes:
+# Main Console Work Functions: 0, 1, ?, ?, 4
+
+#________________________________________________________Misc.__________________________________________________________
+
+import random
+
+usersChapters = []
+usersProblems = [0]
+listIndexes = []
+
+#________________________________________________________Functions______________________________________________________
+
+
+def chapterInputs():
+    while True:
+        userChoiceII = input('\nWithin how many chapters will you be studying for this test/exam?: ')
+        if userChoiceII == '0':
+            print('\nPlease ENTER a integer greater than "0".')
+        elif userChoiceII.isdigit():
+            print('\nAwesome! You stated that you\'ll be studying within {} different chapters.'.format(userChoiceII))
+            break
+        else:
+            print('\nPlease ONLY ENTER a proper integer.....')
+
+    i = 1
+    while True:
+        try:
+            userChoiceIII = float(input('\nPlease ENTER chapter/sub-chapter #{}: '.format(i)))
+            if userChoiceIII > 0:
+                usersChapters.append(userChoiceIII)
+                i += 1
+            else:
+                print('\nPlease be sure to ONLY ENTER a real-number. >:|')
+        except ValueError:
+            print('\nPlease be sure to ONLY ENTER a real-number. >:|')
+            continue
+        if i > int(userChoiceII):
+        	print('\nNice! You have now entered all your study chapters/sub-chapters.')
+        	break
+
+
+def problemInputs():
+    i = 0
+    z = 1
+    while True:
+    	print('\n\nNext, please ENTER the practice problem numbers for chapter {}.'.format(usersChapters[i]))
+    	ii = 1
+    	while True:
+            try:
+            	userChoiceV = int(input('Please ENTER problem #{} for chapter {}. When done inputing all practice problems for the chapter, please ENTER "0": '.format(ii, usersChapters[i])))
+            	if userChoiceV == 0:
+            		print('\nAwesome! You have ENTERED all all your practice problems for chapter {}'.format(usersChapters[i]))
+            		usersProblems.append(z * 200)
+            		break
+            	else:
+            		usersProblems.append(userChoiceV)
+            		ii += 1
+            except ValueError:
+            	print('\nPlease ONLY ENTER proper integers! >:|')
+            	continue
+    	i += 1
+        z += 1
+    	if i == len(usersChapters):
+    		print('\nYou have now ENTERED all the practice problem per chapter.')
+    		break
+
+
+def fullRandomization():
+    randChapter = random.choice(usersChapters)
+
+    i = 0
+    z = 1
+
+    beginIndex = 0
+
+    while True:
+        if randChapter == usersChapters[i]:
+            beginIndex = usersProblems.index(i * 200)
+            secondIndex = usersProblems.index(z * 200)
+        	randProblem = random.choice(usersProblems[beginIndex+1:secondIndex])
+        	break
+        else:
+            i += 1
+            z += 1
+
+    print('\nDo problem #{} from chapter {}. Gook Luck! :)'.format(randProblem, randChapter))
+
+
+    while True:
+    	userChoiceVII = int(input('\nIf you would like to randomize another problem within all chapters, please ENTER "0". If you would like to head-back to the main menu, please ENTER "1": '))
+    	if userChoiceVII == 0:
+    		print('\nAwesome! You\'ve decided to randomize another problem.')
+    		print('\nNow randomizing..........&nd DONE!')
+    		fullRandomization()
+    		break
+    	elif userChoiceVII == 1:
+    		print('\nYou\'ve decided to head back to the MAIN MENU. Let\'s head there now.')
+    		print('\nLOADING....................&nd DONE!')
+    		mainConsole()
+    		break
+    	else:
+    		print('\nPlease ONLY ENTER either "0" OR "1"! >:|')
+
+
+def chapRandomization(userChoiceVIII):
+    i = 0
+    z = 1
+
+    beginIndex = 0
+
+    while True:
+        if userChoiceVIII == usersChapters[i]:
+            beginIndex = usersProblems.index(i * 200)
+            secondIndex = usersProblems.index(z * 200)
+            randProblem = random.choice(usersProblems[beginIndex+1:secondIndex])
+            break
+        else:
+            i += 1
+            z += 1
+
+    print('\nDo problem #{} from chapter {}. Gook Luck! :)'.format(randProblem, userChoiceVIII))
+
+    while True:
+    	userChoiceVII = int(input('\nIf you would like to randomize another problem within the SAME GIVEN chapter, please ENTER "0". If you would like to head-back to the main menu, please ENTER "1": '))
+    	if userChoiceVII == 0:
+    		print('\nAwesome! You\'ve decided to randomize another problem.')
+    		print('\nNow randomizing..........&nd DONE!')
+    		chapRandomization(userChoiceVIII)
+    		break
+    	elif userChoiceVII == 1:
+    		print('\nYou\'ve decided to head back to the MAIN MENU. Let\'s head there now.')
+    		print('\nLOADING....................&nd DONE!')
+    		mainConsole()
+    		break
+    	else:
+    		print('\nPlease ONLY ENTER either "0" OR "1"! >:|')
+
+
+def partRandomization():
+    while True:
+        try:
+            userChoiceVIII = float(input('\nPlease ENTER the chapter/sub-chapter in which you\'d like to complete problems: '))
+            if userChoiceVIII in usersChapters:
+                chapRandomization(userChoiceVIII)
+                break
+            else:
+                print('\nPlease be sure to ONLY ENTER an already summited chapter. >:|')
+        except ValueError:
+            print('\nPlease be sure to ONLY ENTER a real-number. >:|')
+            continue
+
+
+def removeProblem():
+    while True:
+        try:
+            userChoiceIX = float(input('\nPlease ENTER the chapter/sub-chapter in which you\'d like to remove a problem: '))
+            if userChoiceIX in usersChapters:
+                userChoiceX = int(input('\nNext, Please ENTER the problem #number of which you would like to remove: '))
+                if userChoiceX in usersProblems:
+
+                    i = 0
+                    z = 1
+
+                    beginIndex = 0
+
+                    while True:
+                        if userChoiceIX == usersChapters[i]:
+                            beginIndex = usersProblems.index(i * 200)
+                            secondIndex = usersProblems.index(z * 200)
+
+                            # usersProblems.remove(userChoiceX)
+
+                            for x in usersProblems[beginIndex+1:secondIndex]:
+                                usersProblems.remove(userChoiceX)
+
+                            # randProblem = random.choice(usersProblems[beginIndex+1:secondIndex])
+                            print('\nAwesome! We have now removed problem #{} from chapter {}.'.format(userChoiceX, userChoiceIX))
+
+                            while True:
+                            	userChoiceVII = int(input('\nIf you would like to remove another practice problem from a given chapter, please ENTER "0". If you would like to head-back to the main menu, please ENTER "1": '))
+                            	if userChoiceVII == 0:
+                            		print('\nAwesome! You\'ve decided to remove another practice problem.')
+                            		print('\nLOADING..........&nd DONE!')
+                            		removeProblem()
+                            		break
+                            	elif userChoiceVII == 1:
+                            		print('\nYou\'ve decided to head back to the MAIN MENU. Let\'s head there now.')
+                            		print('\nLOADING....................&nd DONE!')
+                            		mainConsole()
+                            		break
+                            	else:
+                            		print('\nPlease ONLY ENTER either "0" OR "1"! >:|')
+                            break
+                        else:
+                            i += 1
+                            z += 1
+                else:
+                    print('\nPlease be sure to ONLY ENTER an already summited practice problem within chapter {}. >:|'.format(userChoiceIX))
+            else:
+                print('\nPlease be sure to ONLY ENTER an already summited chapter. >:|')
+        except ValueError:
+            print('\nPlease be sure to ONLY ENTER a real-number. >:|')
+            continue
+
+
+def addProblem():
+    placer = NULL
+
+def killScript():
+    print('\nYou will now be kicked from the script shortly.......')
+    print('\nLOADING.................&nd DONE.!')
+    print('\nYou have now been kicked from the script.')
+    print('Hope we\'ve helped and wish you the best of luck on your upcoming exam. Cheers! :)')
+
+
+def mainConsole():
+    print('\n\n\t\t\tWelcome to the MAIN CONSOLE!')
+
+    print('\nIf you would like to randomize a problem within ALL chapters, please ENTER "0".')
+    print('If you would like to randomize a problem within A GIVEN chapter, please ENTER "1".')
+    print('If you would like to REMOVE a problem within a given chapter, please ENTER "2".')
+    print('If you would like to ADD a problem within a given chapter, please ENTER "3".')
+    print('If you would like to KILL script, please ENTER "4".')
+
+    while True:
+        userChoiceVI = int(input('\nPlease ENTER an integer 0-4 based on your preferred action: '))
+        if userChoiceVI == 0:
+            print('\nAwesome! You have selected to randomize a problem within ALL chapters.')
+            print('\nLOADING................&nd DONE!')
+            fullRandomization()
+            break
+        elif userChoiceVI == 1:
+            print('\nAwesome! You have selected to randomize a problem within A GIVEN chapter.')
+            print('\nLOADING................&nd DONE!')
+            partRandomization()
+            break
+        elif userChoiceVI == 2:
+            print('\nAwesome! You have selected to REMOVE a problem within a given chapter.')
+            print('\nLOADING................&nd DONE!')
+            removeProblem()
+            break
+        elif userChoiceVI == 3:
+            print('\nAwesome! You have selected to ADD a problem within a given chapter.')
+            print('\nLOADING................&nd DONE!')
+            addProblem()
+            break
+        elif userChoiceVI == 4:
+            print('\nBlows! You have selected to KILL the script :(.')
+            killScript()
+            break
+        else:
+            print('\nHold >:|.!!! Please ONLY ENTER an integer within the range "0-4" as stated!')
+
+#________________________________________________________Strickly_Script________________________________________________
+
+print('\n\t\t\tWelcome to the "Test Preparation" script!')
+
+print('\nThis script was essentially built to help you study for any upcoming test/exam. This script is intended to  help you with the conception part of test preparation. In other words, repetitive practice for a set of specified problems. How it works is quite simple. You\'ll simply be asked to enter the total number of chapters you\'d be studying for, enter the practice problems per chapter, then we\'ll pull up a reference problem in randomization within a given chapter, or all chapters.')
+
+while True:
+    userChoiceI = input('\nWhen ready to proceed, please ENTER "1": ')
+    if userChoiceI == '1':
+        print('\nAwesome! Let us proceed.....')
+        break
+    else:
+        print('\nWe may not proceed until you ENTER "1"! >:|')
+
+while True:
+    usersName = input('\nIn starting, please ENTER you name first name: ')
+    if usersName.isalpha() and len(usersName) > 0:
+        print('\nAwesome! We may now continue {}.'.format(usersName.title()))
+        break
+    else:
+        print('\nPlease only ENTER characters a-z! >:|')
+
+chapterInputs()
+problemInputs()
+
+print('\nNow heading to the Main Console........')
+print('\nLOADING...............&nd DONE!!!')
+
+mainConsole()
